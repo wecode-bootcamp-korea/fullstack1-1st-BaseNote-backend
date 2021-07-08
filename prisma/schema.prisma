@@ -6,3 +6,158 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model series {
+  id         Int        @id @default(autoincrement())
+  name       String     @db.VarChar(100)
+  created_at DateTime   @default(now())
+  products   products[]
+}
+
+model scents {
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(100)
+  created_at     DateTime         @default(now())
+  scent_products scent_products[]
+}
+
+model scent_products {
+  id         Int      @id @default(autoincrement())
+  scent_id   Int
+  product_id Int
+  created_at DateTime @default(now())
+  scents     scents   @relation(fields: [scent_id], references: [id])
+  products   products @relation(fields: [product_id], references: [id])
+}
+
+model volume {
+  id              Int               @id @default(autoincrement())
+  volume_ml       Decimal           @db.Decimal(2, 1)
+  crated_at       DateTime          @default(now())
+  products_volume products_volume[]
+}
+
+model products_volume {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  volume_id  Int
+  created_at DateTime @default(now())
+  products   products @relation(fields: [product_id], references: [id])
+  volume     volume   @relation(fields: [volume_id], references: [id])
+}
+
+model products {
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(45)
+  price             Decimal             @db.Decimal(18, 3)
+  description       String              @db.VarChar(500)
+  series_id         Int
+  created_at        DateTime            @default(now())
+  series            series              @relation(fields: [series_id], references: [id])
+  scent_products    scent_products[]
+  products_volume   products_volume[]
+  product_notes     product_notes[]
+  images            images[]
+  seasonal_products seasonal_products[]
+  products_keywords products_keywords[]
+  reviews           reviews[]
+}
+
+model images {
+  id         Int      @id @default(autoincrement())
+  image_url  String   @db.VarChar(2000)
+  product_id Int
+  created_at DateTime @default(now())
+  products   products @relation(fields: [product_id], references: [id])
+}
+
+model seasons {
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(45)
+  created_at        DateTime            @default(now())
+  seasonal_products seasonal_products[]
+}
+
+model seasonal_products {
+  id         Int      @id @default(autoincrement())
+  rank       Int
+  product_id Int
+  season_id  Int
+  created_at DateTime @default(now())
+  seasons    seasons  @relation(fields: [season_id], references: [id])
+  products   products @relation(fields: [product_id], references: [id])
+}
+
+model notes {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(45)
+  created_at    DateTime        @default(now())
+  product_notes product_notes[]
+}
+
+model note_type {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(45)
+  created_at    DateTime        @default(now())
+  product_notes product_notes[]
+}
+
+model product_notes {
+  id           Int       @id @default(autoincrement())
+  product_id   Int
+  note_id      Int
+  created_at   DateTime  @default(now())
+  note_type_id Int
+  products     products  @relation(fields: [product_id], references: [id])
+  notes        notes     @relation(fields: [note_id], references: [id])
+  note_type    note_type @relation(fields: [note_type_id], references: [id])
+}
+
+model keywords {
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(45)
+  created_at        DateTime            @default(now())
+  products_keywords products_keywords[]
+}
+
+model products_keywords {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  keyword_id Int
+  created_at DateTime @default(now())
+  products   products @relation(fields: [product_id], references: [id])
+  keywords   keywords @relation(fields: [keyword_id], references: [id])
+}
+
+model users {
+  id           Int       @id @default(autoincrement())
+  name         String    @db.VarChar(45)
+  email        String    @db.VarChar(200)
+  user_account String    @db.VarChar(45)
+  phone_number String    @db.VarChar(45)
+  password     String    @db.VarChar(80)
+  created_at   DateTime  @default(now())
+  reviews      reviews[]
+}
+
+model reviews {
+  id            Int             @id @default(autoincrement())
+  title         String          @db.VarChar(200)
+  content       String          @db.VarChar(2000)
+  date          DateTime        @db.Date
+  user_id       Int
+  product_id    Int
+  rate_star     Int
+  created_at    DateTime        @default(now())
+  users         users           @relation(fields: [user_id], references: [id])
+  products      products        @relation(fields: [product_id], references: [id])
+  review_images review_images[]
+}
+
+model review_images {
+  id         Int      @id @default(autoincrement())
+  image_url  String   @db.VarChar(2000)
+  review_id  Int
+  created_at DateTime @default(now())
+  reviews    reviews  @relation(fields: [review_id], references: [id])
+}
