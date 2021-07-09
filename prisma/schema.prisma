@@ -27,8 +27,8 @@ model Scent {
 
 model ScentProduct {
   id        Int      @id @default(autoincrement())
-  scentId   Int      @map("scentId")
-  productId Int      @map("productId")
+  scentId   Int      @map("scent_id")
+  productId Int      @map("product_id")
   createdAt DateTime @default(now()) @map("created_at")
   scent     Scent    @relation(fields: [scentId], references: [id])
   products  Product  @relation(fields: [productId], references: [id])
@@ -47,8 +47,8 @@ model Volume {
 
 model ProductVolume {
   id        Int      @id @default(autoincrement())
-  productId Int      @map("productId")
-  volumeId  Int      @map("volumeId")
+  productId Int      @map("product_id")
+  volumeId  Int      @map("volume_id")
   createdAt DateTime @default(now()) @map("created_at")
   products  Product  @relation(fields: [productId], references: [id])
   volume    Volume   @relation(fields: [volumeId], references: [id])
@@ -61,7 +61,7 @@ model Product {
   name             String            @db.VarChar(45)
   price            Decimal           @db.Decimal(18, 3)
   description      String            @db.VarChar(500)
-  seriesId         Int               @map("seriesId")
+  seriesId         Int               @map("series_id")
   createdAt        DateTime          @default(now()) @map("created_at")
   series           Series            @relation(fields: [seriesId], references: [id])
   scentProducts    ScentProduct[]
@@ -79,7 +79,7 @@ model Product {
 model Image {
   id        Int      @id @default(autoincrement())
   imageUrl  String   @map("image_url") @db.VarChar(2000)
-  productId Int      @map("productId")
+  productId Int      @map("product_id")
   createdAt DateTime @default(now()) @map("created_at")
   products  Product  @relation(fields: [productId], references: [id])
 
@@ -98,8 +98,8 @@ model Season {
 model SeasonalProduct {
   id        Int      @id @default(autoincrement())
   rank      Int
-  productId Int      @map("productId")
-  seasonId  Int      @map("seasonId")
+  productId Int      @map("product_id")
+  seasonId  Int      @map("season_id")
   createdAt DateTime @default(now()) @map("created_at")
   seasons   Season   @relation(fields: [seasonId], references: [id])
   products  Product  @relation(fields: [productId], references: [id])
@@ -127,10 +127,10 @@ model NoteType {
 
 model ProductNote {
   id         Int      @id @default(autoincrement())
-  productId  Int      @map("productId")
-  noteId     Int      @map("noteId")
+  productId  Int      @map("product_id")
+  noteId     Int      @map("note_id")
   createdAt  DateTime @default(now()) @map("created_at")
-  noteTypeId Int      @map("note_typeId")
+  noteTypeId Int      @map("note_type_id")
   products   Product  @relation(fields: [productId], references: [id])
   notes      Note     @relation(fields: [noteId], references: [id])
   noteType   NoteType @relation(fields: [noteTypeId], references: [id])
@@ -149,8 +149,8 @@ model Keyword {
 
 model ProductKeyword {
   id        Int      @id @default(autoincrement())
-  productId Int      @map("productId")
-  keywordId Int      @map("keywordId")
+  productId Int      @map("product_id")
+  keywordId Int      @map("keyword_id")
   createdAt DateTime @default(now()) @map("created_at")
   products  Product  @relation(fields: [productId], references: [id])
   keywords  Keyword  @relation(fields: [keywordId], references: [id])
@@ -177,8 +177,8 @@ model Review {
   title        String        @db.VarChar(200)
   content      String        @db.VarChar(2000)
   date         DateTime      @db.Date
-  userId       Int           @map("userId")
-  productId    Int           @map("productId")
+  userId       Int           @map("user_id")
+  productId    Int           @map("product_id")
   rateStar     Int           @map("rate_star")
   createdAt    DateTime      @default(now()) @map("created_at")
   users        User          @relation(fields: [userId], references: [id])
