@@ -6,3 +6,207 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model Series {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(100)
+  createdAt DateTime  @default(now()) @map("created_at")
+  products  Product[]
+
+  @@map("series")
+}
+
+model Scent {
+  id            Int            @id @default(autoincrement())
+  name          String         @db.VarChar(100)
+  createdAt     DateTime       @default(now()) @map("created_at")
+  scentProducts ScentProduct[]
+
+  @@map("scents")
+}
+
+model ScentProduct {
+  id        Int      @id @default(autoincrement())
+  scentId   Int      @map("scent_id")
+  productId Int      @map("product_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  scent     Scent    @relation(fields: [scentId], references: [id])
+  products  Product  @relation(fields: [productId], references: [id])
+
+  @@map("scent_products")
+}
+
+model Volume {
+  id             Int             @id @default(autoincrement())
+  volumeMl       Decimal         @map("volume_ml") @db.Decimal(2, 1)
+  cratedAt       DateTime        @default(now()) @map("created_at")
+  productsVolume ProductVolume[]
+
+  @@map("volumes")
+}
+
+model ProductVolume {
+  id        Int      @id @default(autoincrement())
+  productId Int      @map("product_id")
+  volumeId  Int      @map("volume_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  products  Product  @relation(fields: [productId], references: [id])
+  volume    Volume   @relation(fields: [volumeId], references: [id])
+
+  @@map("products_volume")
+}
+
+model Product {
+  id               Int               @id @default(autoincrement())
+  name             String            @db.VarChar(45)
+  price            Decimal           @db.Decimal(18, 3)
+  description      String            @db.VarChar(500)
+  seriesId         Int               @map("series_id")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  series           Series            @relation(fields: [seriesId], references: [id])
+  scentProducts    ScentProduct[]
+  productsVolume   ProductVolume[]
+  productNotes     ProductNote[]
+  images           Image[]
+  seasonalProducts SeasonalProduct[]
+  productsKeywords ProductKeyword[]
+  reviews          Review[]
+  cart             Cart[]
+
+  @@map("products")
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  imageUrl  String   @map("image_url") @db.VarChar(2000)
+  productId Int      @map("product_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  products  Product  @relation(fields: [productId], references: [id])
+
+  @@map("images")
+}
+
+model Season {
+  id               Int               @id @default(autoincrement())
+  name             String            @db.VarChar(45)
+  createdAt        DateTime          @default(now()) @map("created_at")
+  seasonalProducts SeasonalProduct[]
+
+  @@map("seasons")
+}
+
+model SeasonalProduct {
+  id        Int      @id @default(autoincrement())
+  rank      Int
+  productId Int      @map("product_id")
+  seasonId  Int      @map("season_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  seasons   Season   @relation(fields: [seasonId], references: [id])
+  products  Product  @relation(fields: [productId], references: [id])
+
+  @@map("seasonal_products")
+}
+
+model Note {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(45)
+  createdAt    DateTime      @default(now()) @map("created_at")
+  productNotes ProductNote[]
+
+  @@map("notes")
+}
+
+model NoteType {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(45)
+  createdAt    DateTime      @default(now()) @map("created_at")
+  productNotes ProductNote[]
+
+  @@map("note_types")
+}
+
+model ProductNote {
+  id         Int      @id @default(autoincrement())
+  productId  Int      @map("product_id")
+  noteId     Int      @map("note_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  noteTypeId Int      @map("note_type_id")
+  products   Product  @relation(fields: [productId], references: [id])
+  notes      Note     @relation(fields: [noteId], references: [id])
+  noteType   NoteType @relation(fields: [noteTypeId], references: [id])
+
+  @@map("product_notes")
+}
+
+model Keyword {
+  id               Int              @id @default(autoincrement())
+  name             String           @db.VarChar(45)
+  createdAt        DateTime         @default(now()) @map("created_at")
+  productsKeywords ProductKeyword[]
+
+  @@map("keywords")
+}
+
+model ProductKeyword {
+  id        Int      @id @default(autoincrement())
+  productId Int      @map("product_id")
+  keywordId Int      @map("keyword_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  products  Product  @relation(fields: [productId], references: [id])
+  keywords  Keyword  @relation(fields: [keywordId], references: [id])
+
+  @@map("products_keywords")
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(45)
+  email       String   @db.VarChar(200)
+  userAccount String   @map("user_account") @db.VarChar(45)
+  phoneNumber String   @map("phone_number") @db.VarChar(45)
+  password    String   @db.VarChar(100)
+  createdAt   DateTime @default(now()) @map("created_at")
+  reviews     Review[]
+  cart        Cart[]
+
+  @@map("users")
+}
+
+model Review {
+  id           Int           @id @default(autoincrement())
+  title        String        @db.VarChar(200)
+  content      String        @db.VarChar(2000)
+  date         DateTime      @db.Date
+  userId       Int           @map("user_id")
+  productId    Int           @map("product_id")
+  rateStar     Int           @map("rate_star")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  users        User          @relation(fields: [userId], references: [id])
+  products     Product       @relation(fields: [productId], references: [id])
+  reviewImages ReviewImage[]
+
+  @@map("reviews")
+}
+
+model ReviewImage {
+  id        Int      @id @default(autoincrement())
+  imageUrl  String   @map("image_url") @db.VarChar(2000)
+  reviewId  Int      @map("review_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  reviews   Review   @relation(fields: [reviewId], references: [id])
+
+  @@map("review_images")
+}
+
+model Cart {
+  id        Int      @id @default(autoincrement())
+  quantity  Int      @default(1)
+  userId    Int      @map("user_id")
+  productId Int      @map("product_id")
+  cratedAt  DateTime @default(now()) @map("created_at")
+
+  products Product @relation(fields: [productId], references: [id])
+  users    User    @relation(fields: [userId], references: [id])
+
+  @@map("carts")
+}
