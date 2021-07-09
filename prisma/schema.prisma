@@ -42,7 +42,7 @@ model Volume {
   cratedAt       DateTime        @default(now()) @map("created_at")
   productsVolume ProductVolume[]
 
-  @@map("volume")
+  @@map("volumes")
 }
 
 model ProductVolume {
@@ -122,7 +122,7 @@ model NoteType {
   createdAt    DateTime      @default(now()) @map("created_at")
   productNotes ProductNote[]
 
-  @@map("note_type")
+  @@map("note_types")
 }
 
 model ProductNote {
@@ -191,7 +191,7 @@ model Review {
 model ReviewImage {
   id        Int      @id @default(autoincrement())
   imageUrl  String   @map("image_url") @db.VarChar(2000)
-  reviewId  Int      @map("reviewId")
+  reviewId  Int      @map("review_id")
   createdAt DateTime @default(now()) @map("created_at")
   reviews   Review   @relation(fields: [reviewId], references: [id])
 
@@ -200,7 +200,7 @@ model ReviewImage {
 
 model Cart {
   id        Int      @id @default(autoincrement())
-  quantity  Int
+  quantity  Int      @default(1)
   userId    Int      @map("user_id")
   productId Int      @map("product_id")
   cratedAt  DateTime @default(now()) @map("created_at")
@@ -208,5 +208,5 @@ model Cart {
   products Product @relation(fields: [productId], references: [id])
   users    User    @relation(fields: [userId], references: [id])
 
-  @@map("cart")
+  @@map("carts")
 }
