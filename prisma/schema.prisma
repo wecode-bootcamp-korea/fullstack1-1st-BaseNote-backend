@@ -71,6 +71,7 @@ model Product {
   seasonalProducts SeasonalProduct[]
   productsKeywords ProductKeyword[]
   reviews          Review[]
+  cart             Cart[]
 
   @@map("products")
 }
@@ -166,6 +167,7 @@ model User {
   password    String   @db.VarChar(100)
   createdAt   DateTime @default(now()) @map("created_at")
   reviews     Review[]
+  cart        Cart[]
 
   @@map("users")
 }
@@ -194,4 +196,15 @@ model ReviewImage {
   reviews   Review   @relation(fields: [reviewId], references: [id])
 
   @@map("review_images")
+}
+
+model Cart {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  userId    Int      @map("user_id")
+  productId Int      @map("product_id")
+  cratedAt  DateTime @default(now()) @map("created_at")
+
+  products Product @relation(fields: [productId], references: [id])
+  users    User    @relation(fields: [userId], references: [id])
 }
