@@ -61,6 +61,7 @@ model Product {
   name             String            @db.VarChar(45)
   price            Decimal           @db.Decimal(18, 3)
   description      String            @db.VarChar(500)
+  seriesNumber     Int               @map("series_number")
   seriesId         Int               @map("series_id")
   createdAt        DateTime          @default(now()) @map("created_at")
   series           Series            @relation(fields: [seriesId], references: [id])
