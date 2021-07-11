@@ -1,5 +1,8 @@
 import { UserDao } from '../models';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+const { JWT_SECRET_KEY } = process.env;
 
 const logIn = async (user_account, password) => {
   const userInfo = await UserDao.getUser(user_account);
@@ -19,6 +22,12 @@ const logIn = async (user_account, password) => {
     err.statusCode = 401;
     throw err;
   }
+
+  const access_token = jwt.sign({ id }, JWT_SECRET_KEY, {
+    expiresIn: '30m',
+  });
+
+  return access_token;
 };
 
 export default { logIn };

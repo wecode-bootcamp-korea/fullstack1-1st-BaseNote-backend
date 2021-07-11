@@ -1,3 +1,5 @@
+import { UserService } from '../services';
+
 const logIn = async (req, res) => {
   try {
     const { user_account, password } = req.body;
@@ -16,9 +18,9 @@ const logIn = async (req, res) => {
       err.statusCode = 404;
       throw err;
     } else {
-      console.log('ok');
+      const access_token = await UserService.logIn(user_account, password);
 
-      res.status(201).json({ message: 'LOGIN_SUCCESS' });
+      res.status(201).json({ message: 'LOGIN_SUCCESS', access_token });
     }
   } catch (err) {
     res.status(err.statusCode || 500).json({ message: err.message });
