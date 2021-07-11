@@ -20,7 +20,7 @@ const logIn = async (req, res) => {
     } else {
       const access_token = await UserService.logIn(user_account, password);
 
-      res.status(201).json({ message: 'LOGIN_SUCCESS', access_token });
+      res.status(200).json({ message: 'LOGIN_SUCCESS', access_token });
     }
   } catch (err) {
     res.status(err.statusCode || 500).json({ message: err.message });
