@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 const { JWT_SECRET_KEY } = process.env;
 
 const logIn = async (userAccount, password) => {
-  const userInfo = await UserDao.getUser(userAccount);
+  const userInfo = await UserDao.findUser(userAccount);
   let err;
 
   if (!userInfo.length) {
