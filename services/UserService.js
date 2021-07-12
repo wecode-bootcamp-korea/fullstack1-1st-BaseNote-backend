@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 
 const { JWT_SECRET_KEY } = process.env;
 
-const logIn = async (user_account, password) => {
-  const userInfo = await UserDao.getUser(user_account);
+const logIn = async (userAccount, password) => {
+  const userInfo = await UserDao.getUser(userAccount);
   let err;
 
   if (!userInfo.length) {
@@ -14,7 +14,7 @@ const logIn = async (user_account, password) => {
     throw err;
   }
 
-  const { user_account: id, password: hashedPassword } = userInfo[0];
+  const { userAccount: id, password: hashedPassword } = userInfo[0];
   const isMatch = await bcrypt.compare(password, hashedPassword);
 
   if (!isMatch) {
