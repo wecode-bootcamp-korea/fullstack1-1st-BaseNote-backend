@@ -9,8 +9,8 @@ const logIn = async (user_account, password) => {
   let err;
 
   if (!userInfo.length) {
-    err = new Error(`COULDN'T_FIND_YOUR_ACCOUNT.`);
-    err.statusCode = 404;
+    err = new Error('INVALID_USER');
+    err.statusCode = 400;
     throw err;
   }
 
@@ -18,8 +18,8 @@ const logIn = async (user_account, password) => {
   const isMatch = await bcrypt.compare(password, hashedPassword);
 
   if (!isMatch) {
-    err = new Error('INCORRECT_PASSWORD.');
-    err.statusCode = 401;
+    err = new Error('INVALID_USER');
+    err.statusCode = 400;
     throw err;
   }
 
