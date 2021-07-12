@@ -38,9 +38,9 @@ model ScentProduct {
 
 model Volume {
   id             Int             @id @default(autoincrement())
-  volumeMl       Decimal         @map("volume_ml") @db.Decimal(2, 1)
+  volumeMl       Float           @map("volume_ml")
   price          Decimal         @db.Decimal(5, 0)
-  cratedAt       DateTime        @default(now()) @map("created_at")
+  createdAt      DateTime        @default(now()) @map("created_at")
   productsVolume ProductVolume[]
 
   @@map("volumes")
