@@ -14,7 +14,7 @@ const logIn = async (userAccount, password) => {
     throw err;
   }
 
-  const { userAccount: id, password: hashedPassword } = userInfo[0];
+  const { user_account, password: hashedPassword } = userInfo[0];
   const isMatch = await bcrypt.compare(password, hashedPassword);
 
   if (!isMatch) {
@@ -23,7 +23,7 @@ const logIn = async (userAccount, password) => {
     throw err;
   }
 
-  const access_token = jwt.sign({ id }, JWT_SECRET_KEY, {
+  const access_token = jwt.sign({ user_account }, JWT_SECRET_KEY, {
     expiresIn: '30m',
   });
 
