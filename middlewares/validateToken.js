@@ -16,10 +16,10 @@ const validateToken = async (req, res, next) => {
       throw err;
     }
 
-    const { user_account } = jwt.verify(token, JWT_SECRET_KEY);
-    const foundUser = await UserDao.findUser(user_account);
+    const { id } = jwt.verify(token, JWT_SECRET_KEY);
+    const foundUser = await UserDao.findUserId(id);
 
-    if (!foundUser) {
+    if (!foundUser.length) {
       const err = new Error('INVALID_USER');
       err.statusCode = 400;
       throw err;
