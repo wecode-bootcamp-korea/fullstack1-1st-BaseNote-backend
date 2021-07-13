@@ -38,8 +38,9 @@ model ScentProduct {
 
 model Volume {
   id             Int             @id @default(autoincrement())
-  volumeMl       Decimal         @map("volume_ml") @db.Decimal(2, 1)
-  cratedAt       DateTime        @default(now()) @map("created_at")
+  volumeMl       Float           @map("volume_ml")
+  price          Decimal         @db.Decimal(5, 0)
+  createdAt      DateTime        @default(now()) @map("created_at")
   productsVolume ProductVolume[]
 
   @@map("volumes")
@@ -57,18 +58,17 @@ model ProductVolume {
 }
 
 model Product {
-  id               Int               @id @default(autoincrement())
-  name             String            @db.VarChar(45)
-  price            Decimal           @db.Decimal(18, 3)
-  description      String            @db.VarChar(500)
-  seriesId         Int               @map("series_id")
-  createdAt        DateTime          @default(now()) @map("created_at")
-  series           Series            @relation(fields: [seriesId], references: [id])
+  id               Int              @id @default(autoincrement())
+  name             String           @db.VarChar(45)
+  description      String           @db.VarChar(500)
+  seriesNumber     Int              @map("series_number")
+  seriesId         Int              @map("series_id")
+  createdAt        DateTime         @default(now()) @map("created_at")
+  series           Series           @relation(fields: [seriesId], references: [id])
   scentProducts    ScentProduct[]
   productsVolume   ProductVolume[]
   productNotes     ProductNote[]
   images           Image[]
-  seasonalProducts SeasonalProduct[]
   productsKeywords ProductKeyword[]
   reviews          Review[]
   cart             Cart[]
@@ -84,27 +84,6 @@ model Image {
   products  Product  @relation(fields: [productId], references: [id])
 
   @@map("images")
-}
-
-model Season {
-  id               Int               @id @default(autoincrement())
-  name             String            @db.VarChar(45)
-  createdAt        DateTime          @default(now()) @map("created_at")
-  seasonalProducts SeasonalProduct[]
-
-  @@map("seasons")
-}
-
-model SeasonalProduct {
-  id        Int      @id @default(autoincrement())
-  rank      Int
-  productId Int      @map("product_id")
-  seasonId  Int      @map("season_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  seasons   Season   @relation(fields: [seasonId], references: [id])
-  products  Product  @relation(fields: [productId], references: [id])
-
-  @@map("seasonal_products")
 }
 
 model Note {
@@ -203,7 +182,7 @@ model Cart {
   quantity  Int      @default(1)
   userId    Int      @map("user_id")
   productId Int      @map("product_id")
-  cratedAt  DateTime @default(now()) @map("created_at")
+  createdAt DateTime @default(now()) @map("created_at")
 
   products Product @relation(fields: [productId], references: [id])
   users    User    @relation(fields: [userId], references: [id])

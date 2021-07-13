@@ -1,12 +1,11 @@
 import http from 'http';
 import app from './app';
-// import prisma from './prisma';
+import prisma from './prisma';
 import dotenv from 'dotenv';
 
 const server = http.createServer(app);
 dotenv.config();
 const { PORT } = process.env;
-console.log(process.env.PORT);
 
 const start = async () => {
   try {
@@ -15,7 +14,7 @@ const start = async () => {
     );
   } catch (err) {
     console.error(err);
-    // await prisma.$disconnect();
+    await prisma.$disconnect();
   }
 };
 
