@@ -6,4 +6,10 @@ const findUser = async (userAccount) => {
   `);
 };
 
-export default { findUser };
+const findUserId = async (id) => {
+  return await prisma.$queryRaw(`
+    SELECT id, password FROM users WHERE id='${id}';
+  `);
+};
+
+export default { findUser, findUserId };
