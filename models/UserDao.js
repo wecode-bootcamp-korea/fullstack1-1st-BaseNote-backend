@@ -1,11 +1,5 @@
 import prisma from '../prisma';
 
-const getUser = async (user_account) => {
-  return await prisma.$queryRaw(
-    `SELECT * FROM users WHERE user_account='${user_account}';`
-  );
-};
-
 const createUsers = async (
   name,
   email,
@@ -22,7 +16,6 @@ const createUsers = async (
   `);
 };
 
-export default { getUser, createUsers };
 const findUser = async (userAccount) => {
   return await prisma.$queryRaw(`
     SELECT id, user_account, password FROM users WHERE user_account='${userAccount}';
@@ -35,4 +28,4 @@ const findUserId = async (id) => {
   `);
 };
 
-export default { findUser, findUserId };
+export default { createUsers, findUser, findUserId };

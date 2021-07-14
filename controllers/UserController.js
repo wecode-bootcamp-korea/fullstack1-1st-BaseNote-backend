@@ -13,7 +13,6 @@ const signUp = async (req, res) => {
   }
 };
 
-export default { signUp };
 const logIn = async (req, res) => {
   try {
     const { user_account, password } = req.body;
@@ -41,4 +40,4 @@ const logIn = async (req, res) => {
   }
 };
 
-export default { logIn };
+export default { signUp, logIn };

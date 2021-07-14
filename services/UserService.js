@@ -2,6 +2,9 @@
 /* eslint-disable no-undef */
 import { UserDao } from '../models';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+const { JWT_SECRET_KEY } = process.env;
 
 const signUp = async (name, email, user_account, phone_number, password) => {
   const saltRounds = 10;
@@ -24,13 +27,6 @@ const signUp = async (name, email, user_account, phone_number, password) => {
     hashedPw
   );
 };
-
-export default { signUp };
-import { UserDao } from '../models';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-
-const { JWT_SECRET_KEY } = process.env;
 
 const logIn = async (userAccount, password) => {
   const userInfo = await UserDao.findUser(userAccount);
@@ -58,4 +54,4 @@ const logIn = async (userAccount, password) => {
   return access_token;
 };
 
-export default { logIn };
+export default { signUp, logIn };
