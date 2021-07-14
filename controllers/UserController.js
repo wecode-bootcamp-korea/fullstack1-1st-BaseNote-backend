@@ -19,15 +19,15 @@ const logIn = async (req, res) => {
 
     if (!userAccount && !password) {
       err = new Error('PLEASE_ENTER_YOUR_USER_ID_AND_PASSWORD.');
-      err.statusCode = 404;
+      err.statusCode = 400;
       throw err;
     } else if (!userAccount) {
       err = new Error('PLEASE_ENTER_YOUR_USER_ID.');
-      err.statusCode = 404;
+      err.statusCode = 400;
       throw err;
     } else if (!password) {
       err = new Error('PLEASE_ENTER_YOUR_PASSWORD.');
-      err.statusCode = 404;
+      err.statusCode = 400;
       throw err;
     } else {
       const accessToken = await UserService.logIn(userAccount, password);
