@@ -38,8 +38,9 @@ model ScentProduct {
 
 model Volume {
   id             Int             @id @default(autoincrement())
-  volumeMl       Decimal         @map("volume_ml") @db.Decimal(2, 1)
-  cratedAt       DateTime        @default(now()) @map("created_at")
+  volumeMl       Float           @map("volume_ml")
+  price          Decimal         @db.Decimal(5, 0)
+  createdAt      DateTime        @default(now()) @map("created_at")
   productsVolume ProductVolume[]
 
   @@map("volumes")
@@ -53,13 +54,13 @@ model ProductVolume {
   products  Product  @relation(fields: [productId], references: [id])
   volume    Volume   @relation(fields: [volumeId], references: [id])
 
+  Cart Cart[]
   @@map("products_volume")
 }
 
 model Product {
   id               Int              @id @default(autoincrement())
   name             String           @db.VarChar(45)
-  price            Decimal          @db.Decimal(18, 3)
   description      String           @db.VarChar(500)
   seriesNumber     Int              @map("series_number")
   seriesId         Int              @map("series_id")
@@ -71,7 +72,6 @@ model Product {
   images           Image[]
   productsKeywords ProductKeyword[]
   reviews          Review[]
-  cart             Cart[]
 
   @@map("products")
 }
@@ -178,14 +178,14 @@ model ReviewImage {
 }
 
 model Cart {
-  id        Int      @id @default(autoincrement())
-  quantity  Int      @default(1)
-  userId    Int      @map("user_id")
-  productId Int      @map("product_id")
-  cratedAt  DateTime @default(now()) @map("created_at")
+  id              Int      @id @default(autoincrement())
+  quantity        Int      @default(1)
+  userId          Int      @map("user_id")
+  productVolumeId Int      @map("product_volume_id")
+  createdAt       DateTime @default(now()) @map("created_at")
 
-  products Product @relation(fields: [productId], references: [id])
-  users    User    @relation(fields: [userId], references: [id])
+  users         User          @relation(fields: [userId], references: [id])
+  productVolume ProductVolume @relation(fields: [productVolumeId], references: [id])
 
   @@map("carts")
 }
