@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-import { userDao } from '../models';
+import { UserDao } from '../models';
 import bcrypt from 'bcrypt';
 
 const signUp = async (name, email, user_account, phone_number, password) => {
@@ -8,7 +8,7 @@ const signUp = async (name, email, user_account, phone_number, password) => {
   const salt = await bcrypt.genSalt(saltRounds);
   const hashedPw = await bcrypt.hash(password, salt);
 
-  const existingUser = await userDao.getUser(user_account);
+  const existingUser = await UserDao.getUser(user_account);
 
   if (existingUser.length) {
     const error = new Error('error');
@@ -16,7 +16,7 @@ const signUp = async (name, email, user_account, phone_number, password) => {
     throw error;
   }
 
-  return await userDao.createUsers(
+  return await UserDao.createUsers(
     name,
     email,
     user_account,

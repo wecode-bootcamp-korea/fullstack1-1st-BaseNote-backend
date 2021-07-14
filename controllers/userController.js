@@ -1,10 +1,10 @@
-import { userService } from '../services';
+import { UserService } from '../services';
 
 const signUp = async (req, res) => {
   try {
     const { name, email, user_account, phone_number, password } = req.body;
 
-    await userService.signUp(name, email, user_account, phone_number, password);
+    await UserService.signUp(name, email, user_account, phone_number, password);
 
     console.log({ user_account });
     res.status(201).json({ user_account });
