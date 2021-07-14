@@ -6,12 +6,12 @@ import jwt from 'jsonwebtoken';
 
 const { JWT_SECRET_KEY } = process.env;
 
-const signUp = async (name, email, user_account, phone_number, password) => {
+const signUp = async (name, email, userAccount, phoneNumber, password) => {
   const saltRounds = 10;
   const salt = await bcrypt.genSalt(saltRounds);
   const hashedPw = await bcrypt.hash(password, salt);
 
-  const existingUser = await UserDao.getUser(user_account);
+  const existingUser = await UserDao.findUser(userAccount);
 
   if (existingUser.length) {
     const error = new Error('error');
@@ -22,8 +22,8 @@ const signUp = async (name, email, user_account, phone_number, password) => {
   return await UserDao.createUsers(
     name,
     email,
-    user_account,
-    phone_number,
+    userAccount,
+    phoneNumber,
     hashedPw
   );
 };
@@ -47,11 +47,11 @@ const logIn = async (userAccount, password) => {
     throw err;
   }
 
-  const access_token = jwt.sign({ id }, JWT_SECRET_KEY, {
+  const accessToken = jwt.sign({ id }, JWT_SECRET_KEY, {
     expiresIn: '30m',
   });
 
-  return access_token;
+  return accessToken;
 };
 
 export default { signUp, logIn };
