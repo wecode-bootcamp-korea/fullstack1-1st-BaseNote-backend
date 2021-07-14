@@ -2,7 +2,12 @@ import prisma from '../prisma';
 
 const createUsers = async (name, email, userAccount, phoneNumber, hashedPw) => {
   return await prisma.$queryRaw(`
-    INSERT INTO users(name, email, user_account, phone_number, password)
+    INSERT INTO users(
+      name, 
+      email, 
+      user_account, 
+      phone_number, 
+      password)
     SELECT '${name}', '${email}', '${userAccount}', '${phoneNumber}', '${hashedPw}'
     WHERE NOT EXISTS 
     (SELECT user_account FROM users 
