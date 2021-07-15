@@ -62,7 +62,7 @@ model Product {
   id               Int              @id @default(autoincrement())
   name             String           @db.VarChar(45)
   description      String           @db.VarChar(500)
-  seriesNumber     Int              @map("series_number")
+  seriesNumber     String           @map("series_number") @db.VarChar(45)
   seriesId         Int              @map("series_id")
   createdAt        DateTime         @default(now()) @map("created_at")
   series           Series           @relation(fields: [seriesId], references: [id])
