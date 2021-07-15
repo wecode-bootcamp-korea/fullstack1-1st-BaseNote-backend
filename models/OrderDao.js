@@ -33,7 +33,7 @@ const updateCartItemQuantity = async (cartItemId, quantity) => {
   return await prisma.$queryRaw(`
     UPDATE carts
       SET quantity = '${quantity}'
-      WHERE id = '${cartItemId}'
+      WHERE id = '${cartItemId}';
   `);
 };
 
