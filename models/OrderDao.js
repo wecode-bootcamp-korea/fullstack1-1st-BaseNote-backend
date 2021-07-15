@@ -3,14 +3,14 @@ import prisma from '../prisma';
 const findCartItems = async (userId) => {
   return await prisma.$queryRaw(`
       SELECT
-        carts.id as cart_item_id,
-        users.id as user_id,
+        carts.id as cartItemId,
+        users.id as userId,
         products.id,
         products.name,
-        images.image_url,
+        images.image_url as imageUrl,
         series.name as series,
-        products.series_number,
-        volumes.volume_ml,
+        products.series_number as seriesNumber,
+        volumes.volume_ml as volume,
         volumes.price
       FROM carts
         JOIN users
