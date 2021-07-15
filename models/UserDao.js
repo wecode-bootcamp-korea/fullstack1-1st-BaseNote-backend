@@ -8,10 +8,7 @@ const createUsers = async (name, email, userAccount, phoneNumber, hashedPw) => {
       user_account, 
       phone_number, 
       password)
-    VALUES '${name}', '${email}', '${userAccount}', '${phoneNumber}', '${hashedPw}'
-    WHERE NOT EXISTS 
-    (SELECT user_account FROM users 
-      WHERE user_account = '${userAccount}')
+    VALUES ('${name}', '${email}', '${userAccount}', ${phoneNumber}, '${hashedPw}')
   `);
 };
 

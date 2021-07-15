@@ -14,7 +14,7 @@ const signUp = async (name, email, userAccount, phoneNumber, password) => {
   const existingUser = await UserDao.findUser(userAccount);
 
   if (existingUser.length) {
-    const error = new Error('error');
+    const error = new Error('ID_ALREADY_IN_USE');
     error.statusCode = 409;
     throw error;
   }
