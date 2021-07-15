@@ -29,11 +29,11 @@ const findCartItems = async (userId) => {
     `);
 };
 
-const updateCartItemQuantity = async (userId, cartItemId, quantity) => {
+const updateCartItemQuantity = async (cartItemId, quantity) => {
   return await prisma.$queryRaw(`
     UPDATE carts
-      SET quantity = IF ((carts.user_id = ${userId} && ${quantity} > 1), '${quantity}', quantity)
-      WHERE id = '${cartItemId}';
+      SET quantity = '${quantity}'
+      WHERE id = '${cartItemId}'
   `);
 };
 
