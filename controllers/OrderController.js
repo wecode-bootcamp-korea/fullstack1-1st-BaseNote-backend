@@ -2,8 +2,8 @@ import { OrderService } from '../services';
 
 const findCartItems = async (req, res) => {
   try {
-    const { id } = req.foundUser[0];
-    const cartItems = await OrderService.findCartItems(id);
+    const { id: userId } = req.foundUser[0];
+    const cartItems = await OrderService.findCartItems(userId);
 
     res
       .status(200)

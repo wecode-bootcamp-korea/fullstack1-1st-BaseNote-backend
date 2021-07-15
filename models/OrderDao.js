@@ -1,6 +1,6 @@
 import prisma from '../prisma';
 
-const findCartItems = async (id) => {
+const findCartItems = async (userId) => {
   return await prisma.$queryRaw(`
       SELECT
         carts.id as cart_item_id,
@@ -25,7 +25,7 @@ const findCartItems = async (id) => {
           ON series.id = products.series_id
         JOIN volumes
           ON volumes.id = products_volume.volume_id
-      WHERE carts.user_id = '${id}';
+      WHERE carts.user_id = '${userId}';
     `);
 };
 

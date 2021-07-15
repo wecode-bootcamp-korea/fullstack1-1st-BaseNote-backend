@@ -1,7 +1,7 @@
 import { OrderDao } from '../models';
 
-const findCartItems = async (id) => {
-  return await OrderDao.findCartItems(id);
+const findCartItems = async (userId) => {
+  return await OrderDao.findCartItems(userId);
 };
 
 const updateCartItemQuantity = async (id, cart_item_id, quantity) => {
