@@ -1,8 +1,32 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import { UserDao } from '../models';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const { JWT_SECRET_KEY } = process.env;
+
+const signUp = async (name, email, userAccount, phoneNumber, password) => {
+  const saltRounds = 10;
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hashedPw = await bcrypt.hash(password, salt);
+
+  const existingUser = await UserDao.findUser(userAccount);
+
+  if (existingUser.length) {
+    const error = new Error('ID_ALREADY_IN_USE');
+    error.statusCode = 409;
+    throw error;
+  }
+
+  return await UserDao.createUsers(
+    name,
+    email,
+    userAccount,
+    phoneNumber,
+    hashedPw
+  );
+};
 
 const logIn = async (userAccount, password) => {
   const userInfo = await UserDao.findUser(userAccount);
@@ -23,11 +47,11 @@ const logIn = async (userAccount, password) => {
     throw err;
   }
 
-  const access_token = jwt.sign({ id }, JWT_SECRET_KEY, {
+  const accessToken = jwt.sign({ id }, JWT_SECRET_KEY, {
     expiresIn: '30m',
   });
 
-  return access_token;
+  return accessToken;
 };
 
-export default { logIn };
+export default { signUp, logIn };

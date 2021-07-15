@@ -4,7 +4,6 @@ import prisma from './prisma';
 import dotenv from 'dotenv';
 
 const server = http.createServer(app);
-dotenv.config();
 const { PORT } = process.env;
 
 const start = async () => {
