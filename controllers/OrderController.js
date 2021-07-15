@@ -15,7 +15,7 @@ const findCartItems = async (req, res) => {
 
 const updateCartItemQuantity = async (req, res) => {
   try {
-    const { id } = req.foundUser[0];
+    const { id: userId } = req.foundUser[0];
     const { cartItemId, quantity } = req.body;
     let err;
 
@@ -32,7 +32,7 @@ const updateCartItemQuantity = async (req, res) => {
       err.statusCode = 400;
       throw err;
     } else {
-      await OrderService.updateCartItemQuantity(id, cartItemId, quantity);
+      await OrderService.updateCartItemQuantity(userId, cartItemId, quantity);
 
       res.status(200).json({ message: 'CART_ITEM_QUANTITY_UPDATED' });
     }
