@@ -4,8 +4,8 @@ const findCartItems = async (userId) => {
   return await OrderDao.findCartItems(userId);
 };
 
-const updateCartItemQuantity = async (id, cart_item_id, quantity) => {
-  return await OrderDao.updateCartItemQuantity(id, cart_item_id, quantity);
+const updateCartItemQuantity = async (id, cartItemId, quantity) => {
+  return await OrderDao.updateCartItemQuantity(id, cartItemId, quantity);
 };
 
 export default { findCartItems, updateCartItemQuantity };

@@ -16,14 +16,14 @@ const findCartItems = async (req, res) => {
 const updateCartItemQuantity = async (req, res) => {
   try {
     const { id } = req.foundUser[0];
-    const { cart_item_id, quantity } = req.body;
+    const { cartItemId, quantity } = req.body;
     let err;
 
-    if (!cart_item_id && !quantity) {
+    if (!cartItemId && !quantity) {
       err = new Error('INVALID_CART_ITEM');
       err.statusCode = 400;
       throw err;
-    } else if (!cart_item_id) {
+    } else if (!cartItemId) {
       err = new Error('INVALID_CART_ITEM');
       err.statusCode = 400;
       throw err;
@@ -32,7 +32,7 @@ const updateCartItemQuantity = async (req, res) => {
       err.statusCode = 400;
       throw err;
     } else {
-      await OrderService.updateCartItemQuantity(id, cart_item_id, quantity);
+      await OrderService.updateCartItemQuantity(id, cartItemId, quantity);
 
       res.status(200).json({ message: 'CART_ITEM_QUANTITY_UPDATED' });
     }
