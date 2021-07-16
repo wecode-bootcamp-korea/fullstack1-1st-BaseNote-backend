@@ -141,8 +141,8 @@ model User {
   id          Int      @id @default(autoincrement())
   name        String   @db.VarChar(45)
   email       String   @db.VarChar(200)
-  userAccount String   @map("user_account") @db.VarChar(45)
-  phoneNumber String   @map("phone_number") @db.VarChar(45)
+  userAccount String   @map("user_account") @db.VarChar(50)
+  phoneNumber String   @map("phone_number") @db.VarChar(50)
   password    String   @db.VarChar(100)
   createdAt   DateTime @default(now()) @map("created_at")
   reviews     Review[]
