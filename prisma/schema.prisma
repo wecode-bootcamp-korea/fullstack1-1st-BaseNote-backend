@@ -130,6 +130,7 @@ model ProductKeyword {
   id        Int      @id @default(autoincrement())
   productId Int      @map("product_id")
   keywordId Int      @map("keyword_id")
+  grade     String   @db.VarChar(20)
   createdAt DateTime @default(now()) @map("created_at")
   products  Product  @relation(fields: [productId], references: [id])
   keywords  Keyword  @relation(fields: [keywordId], references: [id])
