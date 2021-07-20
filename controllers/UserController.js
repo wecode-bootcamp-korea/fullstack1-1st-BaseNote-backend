@@ -3,10 +3,37 @@ import { UserService } from '../services';
 const signUp = async (req, res) => {
   try {
     const { name, email, userAccount, phoneNumber, password } = req.body;
+    let err;
 
-    await UserService.signUp(name, email, userAccount, phoneNumber, password);
+    if (!name && !email && !userAccount && !phoneNumber && !password) {
+      err = new Error('YOU_DIDNT_PUT_ANYTHING_HERE');
+      err.statusCode = 400;
+      throw err;
+    } else if (!name) {
+      err = new Error('PLZ_ENTER_YOUR_NAME');
+      err.statusCode = 400;
+      throw err;
+    } else if (!email) {
+      err = new Error('PLZ_ENTER_YOUR_EMAIL');
+      err.statusCode = 400;
+      throw err;
+    } else if (!userAccount) {
+      err = new Error('PLZ_ENTER_YOUR_ID');
+      err.statusCode = 400;
+      throw err;
+    } else if (!phoneNumber) {
+      err = new Error('PLZ_ENTER_YOUR_PHONE_NUMBER');
+      err.statusCode = 400;
+      throw err;
+    } else if (!password) {
+      err = new Error('PLZ_ENTER_YOUR_PASSWORD');
+      err.statusCode = 400;
+      throw err;
+    } else {
+      await UserService.signUp(name, email, userAccount, phoneNumber, password);
 
-    res.status(201).json({ userAccount });
+      res.status(201).json({ message: 'WELCOME', userAccount });
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
