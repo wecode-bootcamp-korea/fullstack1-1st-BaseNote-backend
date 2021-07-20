@@ -11,7 +11,8 @@ const findCartItems = async (userId) => {
         series.name as series,
         products.series_number as seriesNumber,
         volumes.volume_ml as volume,
-        volumes.price
+        volumes.price,
+        carts.quantity
       FROM carts
         JOIN users
           ON carts.user_id = users.id
