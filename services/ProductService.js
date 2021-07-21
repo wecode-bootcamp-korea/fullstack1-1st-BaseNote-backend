@@ -4,4 +4,8 @@ const findProducts = async (volume) => {
   return await ProductDao.findProducts(volume);
 };
 
-export default { findProducts };
+const filterProducts = async (volume, scent) => {
+  return await ProductDao.filterProducts(volume, scent);
+};
+
+export default { findProducts, filterProducts };

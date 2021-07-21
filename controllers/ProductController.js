@@ -19,4 +19,27 @@ const findProducts = async (req, res) => {
   }
 };
 
-export default { findProducts };
+const filterProducts = async (req, res) => {
+  try {
+    const { volume, scent } = req.query;
+    let err;
+
+    if (!['2.5ml', '40ml'].includes(volume)) {
+      err = new Error('INVALID_ACCESS');
+      err.statusCode = 400;
+      throw err;
+    } else if (!['시트러스', '아쿠아', '머스크'].includes(scent)) {
+      err = new Error('INVALID_ACCESS');
+      err.statusCode = 400;
+      throw err;
+    } else {
+      const products = await ProductService.filterProducts(volume, scent);
+
+      res.status(200).json({ message: 'FILTERED_PROPERLY', products });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export default { findProducts, filterProducts };
