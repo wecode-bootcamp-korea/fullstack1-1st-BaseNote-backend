@@ -4,6 +4,7 @@ const signUp = async (req, res) => {
   try {
     // const { name, email, userAccount, phoneNumber, password } = req.body;
     const { name, email, userAccount, phoneNumber, password } = req.body;
+    const values = Object.values(req.body);
     const keys = Object.keys(req.body);
     const result = keys.filter((key) => {
       return req.body[key] === '';
@@ -11,7 +12,7 @@ const signUp = async (req, res) => {
 
     let err;
 
-    if (Object.values(req.body).includes('')) {
+    if (values.includes('')) {
       err = new Error(`'KEY_ERROR: ${result}'`);
       err.statusCode = 400;
       throw err;
