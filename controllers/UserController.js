@@ -2,31 +2,17 @@ import { UserService } from '../services';
 
 const signUp = async (req, res) => {
   try {
+    // const { name, email, userAccount, phoneNumber, password } = req.body;
     const { name, email, userAccount, phoneNumber, password } = req.body;
+    const keys = Object.keys(req.body);
+    const result = keys.filter((key) => {
+      return req.body[key] === '';
+    });
+
     let err;
 
-    if (!name && !email && !userAccount && !phoneNumber && !password) {
-      err = new Error('YOU_DIDNT_PUT_ANYTHING_HERE');
-      err.statusCode = 400;
-      throw err;
-    } else if (!name) {
-      err = new Error('PLZ_ENTER_YOUR_NAME');
-      err.statusCode = 400;
-      throw err;
-    } else if (!email) {
-      err = new Error('PLZ_ENTER_YOUR_EMAIL');
-      err.statusCode = 400;
-      throw err;
-    } else if (!userAccount) {
-      err = new Error('PLZ_ENTER_YOUR_ID');
-      err.statusCode = 400;
-      throw err;
-    } else if (!phoneNumber) {
-      err = new Error('PLZ_ENTER_YOUR_PHONE_NUMBER');
-      err.statusCode = 400;
-      throw err;
-    } else if (!password) {
-      err = new Error('PLZ_ENTER_YOUR_PASSWORD');
+    if (Object.values(req.body).includes('')) {
+      err = new Error(`'KEY_ERROR: ${result}'`);
       err.statusCode = 400;
       throw err;
     } else {
