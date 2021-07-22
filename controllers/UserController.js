@@ -13,7 +13,7 @@ const signUp = async (req, res) => {
     let err;
 
     if (values.includes('')) {
-      err = new Error(`'KEY_ERROR: ${result}'`);
+      err = new Error(`KEY_ERROR: ${result}`);
       err.statusCode = 400;
       throw err;
     } else {
