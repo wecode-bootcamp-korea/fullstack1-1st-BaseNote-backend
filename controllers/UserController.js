@@ -2,7 +2,6 @@ import { UserService } from '../services';
 
 const signUp = async (req, res) => {
   try {
-    // const { name, email, userAccount, phoneNumber, password } = req.body;
     const { name, email, userAccount, phoneNumber, password } = req.body;
     const values = Object.values(req.body);
     const keys = Object.keys(req.body);
@@ -10,10 +9,10 @@ const signUp = async (req, res) => {
       return req.body[key] === '';
     });
 
-    let err;
+    console.log(values.includes(''));
 
     if (values.includes('')) {
-      err = new Error(`KEY_ERROR: ${result}`);
+      let err = new Error(`KEY_ERROR: ${result}`);
       err.statusCode = 400;
       throw err;
     } else {
@@ -22,7 +21,7 @@ const signUp = async (req, res) => {
       res.status(201).json({ message: 'WELCOME', userAccount });
     }
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(err.statusCode || 500).json({ message: err.message });
   }
 };
 
