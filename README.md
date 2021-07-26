@@ -67,11 +67,17 @@ BackEnd
 <br/>
 <br/>
 
+## Modeling
+
+---
+
+![](https://user-images.githubusercontent.com/50080535/126932519-7a9737d3-b4f7-4966-adc1-6d3b5b461b7b.png)
+
 ## 구현 기능 상세
 
 ---
 
-### 1. 모델링 / Database
+### 1. Modeling / Database
 
 - Aquery Tool을 활용하여 ERD 작성
 - Prisma를 사용하여 mySQL DB 모델 생성
