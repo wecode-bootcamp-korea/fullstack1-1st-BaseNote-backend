@@ -4,6 +4,12 @@
 
 - 향수 판매 사이트 [파펨](https://paffem.me/) 클론 프로젝트
 
+## 🎬 프로젝트 Demo 영상
+
+---
+
+[BASENOTE Demo 영상](https://vimeo.com/579384175)
+
 ## 💁‍♀️💁‍♂️ 팀원
 
 ---
@@ -67,13 +73,19 @@ BackEnd
 <br/>
 <br/>
 
+## Front-end Repository
+
+---
+
+[BASENOTE Front-end Repository Link](https://github.com/wecode-bootcamp-korea/fullstack1-1st-BaseNote-frontend)
+
 ## Modeling
 
 ---
 
 ![](https://user-images.githubusercontent.com/50080535/126932519-7a9737d3-b4f7-4966-adc1-6d3b5b461b7b.png)
 
-## 구현 기능 상세
+## Back-end 구현 기능 상세
 
 ---
 
