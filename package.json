@@ -18,7 +18,9 @@
     "fs": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.9"
+    "nodemon": "^2.0.9",
+    "passport": "^0.4.1",
+    "passport-kakao": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
