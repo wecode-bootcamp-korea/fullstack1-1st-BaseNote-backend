@@ -3,6 +3,6 @@ import { ProductController } from '../controllers';
 
 const router = express.Router();
 
-router.get('', ProductController.findProducts);
+router.get('/:volumeId', ProductController.findAllProducts);
 
 export default router;

@@ -1,7 +1,11 @@
 import { ProductDao } from '../models';
 
-const findProducts = async (volume) => {
-  return await ProductDao.findProducts(volume);
+const findProducts = async (volumeId, scentName) => {
+  return await ProductDao.findProducts(volumeId, scentName);
 };
 
-export default { findProducts };
+const findAllProducts = async (volumeId) => {
+  return await ProductDao.findAllProducts(volumeId);
+};
+
+export default { findProducts, findAllProducts };
