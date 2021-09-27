@@ -6,21 +6,14 @@ const findAllProducts = async (req, res) => {
     const { scentName } = req.query;
     let err;
 
-    if (scentName === undefined) {
+    if (!scentName) {
       const products = await ProductService.findAllProducts(volumeId);
-      return res
-        .status(200)
-        .json({ messate: 'FIND_PRODUCTS_SUCCESSFULLY', products });
-    }
 
-    if (volumeId < 3 && volumeId >= 1) {
-      const filterdProducts = await ProductService.findProducts(
-        volumeId,
-        scentName
-      );
-      return res
-        .status(200)
-        .json({ message: 'FILTER_PRODUCTS_SUCCESSFULLY', filterdProducts });
+      res.status(200).json({ messate: 'FIND_PRODUCTS_SUCCESSFULLY', products });
+    } else if (volumeId < 3 && volumeId >= 1) {
+      const filter = await ProductService.findProducts(volumeId, scentName);
+
+      res.status(200).json({ message: 'FILTER_PRODUCTS_SUCCESSFULLY', filter });
     } else {
       err = new Error('INVALID_ACCESS');
       err.statusCode = 400;
